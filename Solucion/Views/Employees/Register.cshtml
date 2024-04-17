@@ -17,7 +17,7 @@
                         <h3>Sign Up</h3>
                     </div>
                     <hr>
-                    <form asp-controller="Employees" asp-action="Create" method="post">
+                    <form asp-controller="Employees" asp-action="Register" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="row">
                             <div class="col-md-6">
@@ -67,14 +67,13 @@
                                 </div>
                             </div>
                         </div>
+                        <input class="btn btn-success form-control" value="Sign Up" type="submit" name="submit"/>
+                        <hr>
+                        <p>
+                            Do you have an account?
+                            <a class="text-decoration-none mt-1" asp-controller="Employees" asp-action="Index">Log In</a>
+                        </p>
                     </form>
-                    <input class="btn btn-success" value="Sign Up" type="submit" />
-                    <hr>
-                    <p>
-                        Do you have an account?
-                        <a class="text-decoration-none mt-1" asp-controller="Employees" asp-action="Index">Log In</a>
-                    </p>
-
                 </div>
             </div>
         </div>

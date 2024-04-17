@@ -1,6 +1,5 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
-using Solucion.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Solucion.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,9 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<BaseContext> (options => options.UseMySql (
-    builder.Configuration.GetConnectionString("MySqlConnection"),
-    Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.20-mysql")));
+builder.Services.AddDbContext<BaseContext> (options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("MySqlConnection"),
+        Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.20-mysql")));
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => 
+{
+    options.LoginPath = "/Employees/Index";
+    options.AccessDeniedPath = "/Employees/AccessDenied";
+});
 
 var app = builder.Build();
 
@@ -27,6 +35,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
