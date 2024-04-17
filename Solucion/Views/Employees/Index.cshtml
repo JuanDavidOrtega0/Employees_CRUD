@@ -1,0 +1,42 @@
+<style>
+    body {
+        background-image: url(https://media.istockphoto.com/id/185005145/es/foto/fondo-oscuro-de-textura-de-tela-negra.webp?b=1&s=170667a&w=0&k=20&c=jKSjZSNFAVgAr2QB06XJ0IoP5I6FmOi9AbJnmcRFRWs=);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mt-5" style="padding: 60px;">
+                    <div class="text-center">
+                        <h3>Log In</h3>
+                    </div>
+                    <div class="form-floating mb-3 mt-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <div class="checkbox mb-3 mt-2">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-success" type="submit">Log In</button>
+                    <a class="text-decoration-none mt-1" asp-controller="Employees" asp-action="ForgotPassword">Forgot password?</a>
+                    <hr>
+                    <p>
+                        Don't have an account?
+                        <a class="text-decoration-none mt-1" asp-controller="Employees" asp-action="Register">Register</a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
