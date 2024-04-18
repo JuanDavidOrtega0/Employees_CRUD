@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Solucion.Data;
@@ -45,6 +46,7 @@ public class EmployeesController : Controller
         return View("Index");
     }
     
+    [Authorize]
     public async Task<IActionResult> Home()
     {   
         var employee = await _context.Employees.ToListAsync();
@@ -67,7 +69,9 @@ public class EmployeesController : Controller
 
     public async Task<IActionResult> Logout()
     {
-        await HttpContext.SignOutAsync();
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        Response.Cookies.Append("LoggedOut", "true");
         return RedirectToAction("Index", "Employees");
     }
 

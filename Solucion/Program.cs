@@ -16,11 +16,26 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => 
 {
-    options.LoginPath = "/Employees/Index";
+    options.LoginPath = "/Employees/Login";
+    options.LogoutPath = "/Employees/Logout";
     options.AccessDeniedPath = "/Employees/AccessDenied";
 });
 
+
+
 var app = builder.Build();
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Cookies["LoggedOut"] == "true" && !context.Request.Path.Equals("/Employees/Login", StringComparison.OrdinalIgnoreCase))
+    {
+        context.Response.Cookies.Delete("LoggedOut");
+        context.Response.Redirect("/Employees/Index");
+        return;
+    }
+
+    await next();
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
