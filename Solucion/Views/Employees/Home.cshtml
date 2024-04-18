@@ -7,10 +7,18 @@
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-2 mt-3">
+        <div class="row mt-3">
+            <div class="col-md-2">
                 <form asp-controller="Employees" asp-action="Logout" method="post">
                     <button type="submit" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M5 22a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3h-2V4H6v16h12v-2h2v3a1 1 0 0 1-1 1zm13-6v-3h-7v-2h7V8l5 4z"/></svg></button>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <form asp-controller="Employees" asp-action="Search" method="get">
+                    <div class="input-group">
+                        <input placeholder="Buscar" class="form-control" name="searchString" aria-describedby="id">
+                        <button type="submit" class="btn btn-secondary" id="id">Buscar</button>
+                    </div>
                 </form>
             </div>
         </div>

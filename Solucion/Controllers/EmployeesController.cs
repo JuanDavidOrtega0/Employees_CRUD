@@ -159,4 +159,15 @@ public class EmployeesController : Controller
     {
         return _context.Employees.Any(e => e.Id == id);
     }
+
+    [Authorize]
+    public IActionResult Search(string searchString)
+    {
+        var employees = _context.Employees.AsQueryable();
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            employees = employees.Where(x => x.Name.Contains(searchString) || x.LastName.Contains(searchString) || x.Email.Contains(searchString));
+        }
+        return View("Home" ,employees.ToList());
+    }
 }
