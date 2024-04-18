@@ -26,7 +26,7 @@ public class EmployeesController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(string email, string password)
-    {   
+    {
         var employee = await _context.Employees.FirstOrDefaultAsync(u => u.Email == email);
         if (employee != null && employee.Password == password)
         {
@@ -45,10 +45,10 @@ public class EmployeesController : Controller
         ModelState.AddModelError(string.Empty, "Correo o contraseña incorrectos");
         return View("Index");
     }
-    
+
     [Authorize]
     public async Task<IActionResult> Home()
-    {   
+    {
         var employee = await _context.Employees.ToListAsync();
         return View(employee);
     }
@@ -61,10 +61,14 @@ public class EmployeesController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(Employee employee)
-    {
-        _context.Employees.Add(employee);
-        await _context.SaveChangesAsync();
-        return RedirectToAction("Index");
+    {   
+        if (ModelState.IsValid)
+        {
+            _context.Employees.Add(employee);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+        return View(employee);
     }
 
     public async Task<IActionResult> Logout()
@@ -95,5 +99,64 @@ public class EmployeesController : Controller
         _context.Employees.Remove(employee);
         await _context.SaveChangesAsync();
         return RedirectToAction("Home");
+    }
+
+    public async Task<IActionResult> Details(int? id)
+    {   
+        if (id == null)
+        {
+            return NotFound();
+        }
+        var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+        if (employee == null)
+        {
+            return NotFound();
+        }
+        return View(employee);
+    }
+
+    public async Task<IActionResult> ForgotPass(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        var employee = await _context.Employees.FindAsync(id);
+        if (employee == null)
+        {
+            return NotFound();
+        }
+        return View(employee);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ForgotPass(Employee employee)
+    {
+        if (ModelState.IsValid)
+        {   
+            try
+            {
+                _context.Update(employee);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EmployeeExists(employee.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        return View(employee);
+    }
+
+    private bool EmployeeExists(int id)
+    {
+        return _context.Employees.Any(e => e.Id == id);
     }
 }
