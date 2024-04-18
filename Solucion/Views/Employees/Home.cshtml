@@ -1,9 +1,20 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-ttP53qgaNBlvDLXl+9zWO5B4JlnNLV8DkaXiy6TQ/8ELOy0fEbn5Z3cTY4N7GM1PX9mD51BZg+XVFiV+4sVvA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 
 <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 mt-3">
+                <form asp-controller="Employees" asp-action="Logout" method="post">
+                    <button type="submit" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M5 22a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3h-2V4H6v16h12v-2h2v3a1 1 0 0 1-1 1zm13-6v-3h-7v-2h7V8l5 4z"/></svg></button>
+                </form>
+            </div>
+        </div>
+    </div>
     <table class="table table-bordered border-dark mt-3 text-center">
         <thead class="table table-dark">
             <tr>
