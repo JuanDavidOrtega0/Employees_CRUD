@@ -1,15 +1,16 @@
-// using System.Collections.Generic;
-// using Solucion.Data;
-// using Solucion.Models;
-// using Microsoft.AspNetCore.Authorization;
-// using Microsoft.AspNetCore.Mvc;
-// using Microsoft.EntityFrameworkCore;
-// using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Solucion.Data;
+using Solucion.Models;
 
-// namespace Solucion.Controllers
-// {
-//     public class RegistersController : Controller
-//     {
+namespace Solucion.Controllers
+{
+    public class RecordsController : Controller
+    {
 
 //         public static DateTime Today { get; }
 //         public BaseContext _context;
@@ -129,5 +130,5 @@
 //             }
 //         } */
 
-//     }
-// }
+    }
+}
