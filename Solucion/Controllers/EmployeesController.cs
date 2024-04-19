@@ -40,7 +40,14 @@ public class EmployeesController : Controller
             var main = new ClaimsPrincipal(employeesIdentity);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, main);
-            return RedirectToAction("Home", "Employees");
+            if (employee.Role == "Administrador")
+            {
+                return RedirectToAction("Home", "Employees");
+            }
+            else
+            {
+                return RedirectToAction("Main", "Employees");
+            }
         }
         ModelState.AddModelError(string.Empty, "Correo o contraseña incorrectos");
         return View("Index");
@@ -48,6 +55,13 @@ public class EmployeesController : Controller
 
     [Authorize]
     public async Task<IActionResult> Home()
+    {
+        var employee = await _context.Employees.ToListAsync();
+        return View(employee);
+    }
+
+    [Authorize]
+    public async Task<IActionResult> Main()
     {
         var employee = await _context.Employees.ToListAsync();
         return View(employee);
@@ -61,7 +75,7 @@ public class EmployeesController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(Employee employee)
-    {   
+    {
         if (ModelState.IsValid)
         {
             _context.Employees.Add(employee);
@@ -102,7 +116,7 @@ public class EmployeesController : Controller
     }
 
     public async Task<IActionResult> Details(int? id)
-    {   
+    {
         if (id == null)
         {
             return NotFound();
@@ -115,44 +129,32 @@ public class EmployeesController : Controller
         return View(employee);
     }
 
-    public async Task<IActionResult> ForgotPass(int? id)
+    public IActionResult ForgotPass()
     {
-        if (id == null)
-        {
-            return NotFound();
-        }
-        var employee = await _context.Employees.FindAsync(id);
-        if (employee == null)
-        {
-            return NotFound();
-        }
-        return View(employee);
+        return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> ForgotPass(Employee employee)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ForgotPass(string email, string newPassword, string confirmPassword)
     {
-        if (ModelState.IsValid)
-        {   
-            try
+        var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Email == email);
+        if (employee != null && employee.Email == email)
+        {
+            if (newPassword != confirmPassword)
             {
-                _context.Update(employee);
-                await _context.SaveChangesAsync();
+                ModelState.AddModelError(string.Empty, "Las contraseñas no coinciden");
+                return View("ForgotPass");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EmployeeExists(employee.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            employee.Password = newPassword;
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-        return View(employee);
+        else 
+        {
+            ModelState.AddModelError(string.Empty, "Correo no registrado");
+            return View("ForgotPass");
+        }
     }
 
     private bool EmployeeExists(int id)
@@ -168,6 +170,6 @@ public class EmployeesController : Controller
         {
             employees = employees.Where(x => x.Name.Contains(searchString) || x.LastName.Contains(searchString) || x.Email.Contains(searchString));
         }
-        return View("Home" ,employees.ToList());
+        return View("Home", employees.ToList());
     }
 }

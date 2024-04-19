@@ -23,14 +23,14 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label class="form-label" asp-for="Name"></label>
-                                    <input asp-for="Name" class="form-control"/>
+                                    <input asp-for="Name" class="form-control" />
                                     <span asp-validation-for="Name" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label class="form-label" asp-for="LastName"></label>
-                                    <input asp-for="LastName" class="form-control"/>
+                                    <input asp-for="LastName" class="form-control" />
                                     <span asp-validation-for="LastName" class="text-danger"></span>
                                 </div>
                             </div>
@@ -39,14 +39,14 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label class="form-label" asp-for="Email"></label>
-                                    <input type="email" asp-for="Email" class="form-control"/>
+                                    <input type="email" asp-for="Email" class="form-control" />
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label class="form-label" asp-for="Phone"></label>
-                                    <input asp-for="Phone" class="form-control"/>
+                                    <input asp-for="Phone" class="form-control" />
                                     <span asp-validation-for="Phone" class="text-danger"></span>
                                 </div>
                             </div>
@@ -55,23 +55,32 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label class="form-label" asp-for="Address"></label>
-                                    <input asp-for="Address" class="form-control"/>
+                                    <input asp-for="Address" class="form-control" />
                                     <span asp-validation-for="Address" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label class="form-label" asp-for="Password"></label>
-                                    <input type="password" asp-for="Password" class="form-control"/>
+                                    <input type="password" asp-for="Password" class="form-control" />
                                     <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
-                        <input class="btn btn-success form-control" value="Sign Up" type="submit" name="submit"/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="hidden" asp-for="Role" class="form-control" value="Employee" />
+                                    <span asp-validation-for="Role" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="btn btn-success form-control" value="Sign Up" type="submit" name="submit" />
                         <hr>
                         <p>
                             Do you have an account?
-                            <a class="text-decoration-none mt-1" asp-controller="Employees" asp-action="Index">Log In</a>
+                            <a class="text-decoration-none mt-1" asp-controller="Employees" asp-action="Index">Log
+                                In</a>
                         </p>
                     </form>
                 </div>

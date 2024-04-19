@@ -1,0 +1,20 @@
+@model Solucion.Models.Employee
+
+<form asp-controller="Employees" asp-action="ForgotPass" method="post">
+    <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" name="email" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="newPassword">Nueva contraseña</label>
+        <input type="password" id="newPassword" name="newPassword" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="confirmPassword">Confirmar contraseña</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Restablecer contraseña</button>
+    <div class="text-danger">
+        @Html.ValidationSummary()
+    </div>
+</form>
