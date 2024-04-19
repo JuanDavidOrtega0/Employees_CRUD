@@ -11,5 +11,7 @@ namespace Solucion.Data
         }
 
         public DbSet<Employee> Employees { get; set; }
+
+        public DbSet<Record> Records { get; set; }
     }
 }

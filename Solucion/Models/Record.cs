@@ -5,5 +5,9 @@ namespace Solucion.Models
         public int Id { get; set; }
 
         public DateTime RegisterEntry { get; set; }
+
+        public DateTime RegisterExit { get; set; }
+
+        public int Employee_Id { get; set; }
     }
 }
