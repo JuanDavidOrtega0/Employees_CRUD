@@ -130,6 +130,20 @@ public class EmployeesController : Controller
         return View(employee);
     }
 
+    public async Task<IActionResult> DetailsMain(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        var employee = await _context.Employees.FirstOrDefaultAsync(x => x.Id == id);
+        if (employee == null)
+        {
+            return NotFound();
+        }
+        return View(employee);
+    }
+
     public IActionResult ForgotPass()
     {
         return View();
@@ -167,5 +181,16 @@ public class EmployeesController : Controller
             employees = employees.Where(x => x.Name.Contains(searchString) || x.LastName.Contains(searchString) || x.Email.Contains(searchString));
         }
         return View("Home", employees.ToList());
+    }
+
+    [Authorize]
+    public IActionResult SearchMain(string searchString)
+    {
+        var employees = _context.Employees.AsQueryable();
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            employees = employees.Where(x => x.Name.Contains(searchString) || x.LastName.Contains(searchString) || x.Email.Contains(searchString));
+        }
+        return View("Main", employees.ToList());
     }
 }

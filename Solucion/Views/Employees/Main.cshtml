@@ -4,43 +4,84 @@
     <style>
         .sidebar {
             height: 100%;
-            width: 250px;
+            width: 200px;
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #b0adad;
             padding: 20px;
         }
 
         .content {
-            margin-left: 250px;
+            margin-left: 200px;
             padding: 20px;
         }
     </style>
 </head>
 
 <body>
-    <div class="sidebar">
-        <ul class="nav flex-column">
-            <li class="nav-item mb-2">
-                <button class="nav-link active btn btn-info" asp-controller="Employees" asp-action="Info"><i class="fas fa-user"></i> User Info</button>
-            </li>
-            <li class="nav-item mb-2">
-                <button class="nav-link btn btn-warning" asp-controller="Employees" asp-action="History"><i class="fas fa-history"></i> History</button>
-            </li>
-            <li class="nav-item">
-                <form asp-controller="Employees" asp-action="Logout" method="post">
-                    <button type="submit" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M5 22a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3h-2V4H6v16h12v-2h2v3a1 1 0 0 1-1 1zm13-6v-3h-7v-2h7V8l5 4z"/></svg> Logout</button>
-                </form>
-            </li>
-        </ul>
+    <div class="sidebar bg-secondary">
+        <div class="dropdown text-center">
+            <nav class="nav flex-column">
+                <img class="img-fluid" src="https://riwi.io/wp-content/uploads/2023/07/Fondo-claro-logo.png" alt="">
+                <hr>
+                <a class="dropdown-item" asp-controller="Employees" asp-action="Main"><i class="fas fa-user-plus"></i>
+                    Manage Users</a>
+                <hr>
+                <a class="dropdown-item" asp-controller="Employees" asp-action="Main"><i class="fas fa-user"></i>
+                    User Info</a>
+                <hr>
+                <a class="dropdown-item" asp-controller="Employees" asp-action="History"><i class="fas fa-history"></i>
+                    History</a>
+                <hr>
+                <br>
+                <hr>
+                <a class="dropdown-item"><i class="fas fa-address-card"></i> Register Entry</a>
+                <hr>
+                <a class="dropdown-item"><i class="fas fa-address-card"></i> Register Exit</a>
+                <hr>
+            </nav>
+        </div>
+        <form asp-controller="Employees" asp-action="Logout" method="post">
+            <button type="submit" class="btn btn-danger btn-lg" style="position: absolute; bottom: 10px;"><i
+                    class="fas fa-sign-out-alt"></i> Logout</button>
+        </form>
     </div>
 
-    <div class="content">
-        <div id="userInfo" style="display: none;">
-            <h2>User Information</h2>   
+    <nav class="navbar" style="margin-left: 200px;">
+        <div class="container">
+            <h4 class="mt-1">Employee List</h4>
+            <form asp-controller="Employees" asp-action="SearchMain" method="get">
+                <div class="input-group">
+                    <input class="form-control" placeholder="Search" name="searchString" aria-describedby="id">
+                    <button class="btn btn-success" type="submit" id="id">Search</button>
+                </div>
+            </form>
         </div>
+    </nav>
+
+    <div class="content text-center">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var employee in Model)
+                {
+                    <tr>
+                        <td>@employee.Name</td>
+                        <td>@employee.LastName</td>
+                        <td>@employee.Email</td>
+                        <td>
+                            <a class="btn btn-info" asp-controller="Employees" asp-action="DetailsMain" asp-route-id="@employee.Id"><i class="fas fa-info-circle"></i> Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </body>
-
-</html>
