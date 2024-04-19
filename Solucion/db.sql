@@ -11,6 +11,14 @@ CREATE TABLE Employees (
     Password VARCHAR(125)
 );
 
+CREATE TABLE Records (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    RegisterEntry VARCHAR(45),
+    RegisterExit VARCHAR(45),
+    Employee_Id INT,
+    FOREIGN KEY (Employee_Id) REFERENCES Employees(Id)
+);
+
 INSERT INTO `Employees`
 (`Name`, `LastName`, `Email`, `Phone`, `Address`, `Role`, `Password`)
 VALUES
@@ -18,5 +26,3 @@ VALUES
 ("Angelica", "Martinez", "angelica@gmail.com", "3053434374", "Envidago", "Administrador", "123")
 
 SELECT * FROM Employees;
-
-DROP TABLE Employees;
