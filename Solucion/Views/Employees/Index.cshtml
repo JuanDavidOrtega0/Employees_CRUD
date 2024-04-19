@@ -1,16 +1,8 @@
-<style>
-    body {
-        background-image: url(https://media.istockphoto.com/id/185005145/es/foto/fondo-oscuro-de-textura-de-tela-negra.webp?b=1&s=170667a&w=0&k=20&c=jKSjZSNFAVgAr2QB06XJ0IoP5I6FmOi9AbJnmcRFRWs=);
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-</style>
-
 <body>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card mt-5" style="padding: 60px;">
+                <div class="card mt-5 bg-dark text-light" style="padding: 60px">
                     <div class="text-center">
                         <h3>Log In</h3>
                     </div>
@@ -18,11 +10,11 @@
                         @Html.AntiForgeryToken()
                         <div class="form-floating mb-3 mt-3">
                             <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
-                            <label for="floatingInput">Email address</label>
+                            <label for="floatingInput" class="text-dark">Email address</label>
                         </div>
                         <div class="form-floating">
                             <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
-                            <label for="floatingPassword">Password</label>
+                            <label class="text-dark" for="floatingPassword">Password</label>
                         </div>
                         <div class="text-danger">
                             @Html.ValidationSummary()

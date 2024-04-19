@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Solucion.Data;
 using Solucion.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Solucion.Controllers;
 
@@ -155,11 +156,6 @@ public class EmployeesController : Controller
             ModelState.AddModelError(string.Empty, "Correo no registrado");
             return View("ForgotPass");
         }
-    }
-
-    private bool EmployeeExists(int id)
-    {
-        return _context.Employees.Any(e => e.Id == id);
     }
 
     [Authorize]

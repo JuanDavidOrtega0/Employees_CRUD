@@ -1,1 +1,46 @@
-<h1>Bienvenido Usuario</h1>
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #b0adad;
+            padding: 20px;
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <button class="nav-link active btn btn-info" asp-controller="Employees" asp-action="Info"><i class="fas fa-user"></i> User Info</button>
+            </li>
+            <li class="nav-item mb-2">
+                <button class="nav-link btn btn-warning" asp-controller="Employees" asp-action="History"><i class="fas fa-history"></i> History</button>
+            </li>
+            <li class="nav-item">
+                <form asp-controller="Employees" asp-action="Logout" method="post">
+                    <button type="submit" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M5 22a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3h-2V4H6v16h12v-2h2v3a1 1 0 0 1-1 1zm13-6v-3h-7v-2h7V8l5 4z"/></svg> Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div id="userInfo" style="display: none;">
+            <h2>User Information</h2>   
+        </div>
+    </div>
+</body>
+
+</html>
