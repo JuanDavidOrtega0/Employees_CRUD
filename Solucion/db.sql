@@ -1,4 +1,4 @@
--- Active: 1713213038695@@bsk9tmgwoj6lylnpcxf5-mysql.services.clever-cloud.com@3306@bsk9tmgwoj6lylnpcxf5
+-- Active: 1713397710568@@bsk9tmgwoj6lylnpcxf5-mysql.services.clever-cloud.com@3306@bsk9tmgwoj6lylnpcxf5
 
 CREATE TABLE Employees (
     Id INT PRIMARY KEY AUTO_INCREMENT,
@@ -26,3 +26,5 @@ VALUES
 ("Angelica", "Martinez", "angelica@gmail.com", "3053434374", "Envidago", "Administrador", "123")
 
 SELECT * FROM Employees;
+
+SELECT * FROM Records;
