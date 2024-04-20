@@ -48,7 +48,7 @@ namespace Solucion.Controllers
                 return RedirectToAction("Index");
             }
             catch (System.Exception)
-            {   
+            {
                 throw;
             }
         }
@@ -71,14 +71,42 @@ namespace Solucion.Controllers
                 return RedirectToAction("Index");
             }
             catch (System.Exception)
-            {   
+            {
                 throw;
             }
         }
 
+        [Authorize]
+        public IActionResult SearchHistory(string searchString)
+        {
+            var history = _context.Records.AsQueryable();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                history = history.Where(x => x.RegisterEntry.ToString().Contains(searchString) || x.RegisterExit.ToString().Contains(searchString) || x.Employee_Id.ToString().Contains(searchString));
+            }
+            return View("Index", history.ToList());
+        }
 
+        public async Task<IActionResult> DeleteHistoryView(int? id)
+        {
+            var history = await _context.Records.FindAsync(id);
+            if (history == null)
+            {
+                return NotFound();
+            }
+            return View(history);
+        }
 
-     
-
+        public async Task<IActionResult> DeleteHistory(int id)
+        {
+            var history = await _context.Records.FindAsync(id);
+            if (history == null)
+            {
+                return NotFound();
+            }
+            _context.Records.Remove(history);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
     }
 }

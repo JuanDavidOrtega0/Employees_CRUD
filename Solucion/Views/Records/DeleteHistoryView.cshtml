@@ -1,0 +1,26 @@
+@model Solucion.Models.Record
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mt-5 bg-dark text-light" style="padding: 60px;">
+                    <div class="text-center">
+                        <h2>Deseas eliminar este registro?</h2>
+                        <hr>
+                        <p><strong>Id: </strong>@Model.Id</p>
+                        <p><strong>Record Entry: </strong>@Model.RegisterEntry</p>
+                        <p><strong>Record Exit: </strong>@Model.RegisterExit</p>
+                        <p><strong>Employee Id: </strong>@Model.Employee_Id</p>
+                        <br>
+                        <form asp-controller="Records" asp-action="DeleteHistory" method="post">
+                            <input type="hidden" asp-for="Id">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <a class="btn btn-secondary" asp-controller="Records" asp-action="Index">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

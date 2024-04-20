@@ -6,11 +6,11 @@ namespace Solucion.Models
     {
         public int Id { get; set; }
 
-        public DateTime RegisterEntry { get; set; }
+        public System.DateTime? RegisterEntry { get; set; }
 
-        public DateTime RegisterExit { get; set; }
+        public System.DateTime? RegisterExit { get; set; }
 
         [ForeignKey("Employee_Id")]
-        public int Employee_Id { get; set; } 
+        public int Employee_Id { get; set; }
     }
 }

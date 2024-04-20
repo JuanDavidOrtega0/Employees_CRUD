@@ -54,7 +54,7 @@
     <nav class="navbar" style="margin-left: 200px;">
         <div class="container">
             <h4 class="mt-1">History Records</h4>
-            <form asp-controller="Employees" asp-action="SearchMain" method="get">
+            <form asp-controller="Records" asp-action="SearchHistory" method="get">
                 <div class="input-group">
                     <input class="form-control" placeholder="Search" name="searchString" aria-describedby="id">
                     <button class="btn btn-success" type="submit" id="id">Search</button>
@@ -81,7 +81,7 @@
                         <td>@item.RegisterEntry</td>
                         <td>@item.RegisterExit</td>
                         <td>
-                            <a class="btn btn-danger" asp-controller="Employees" asp-action="DetailsMain" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
+                            <a class="btn btn-danger" asp-controller="Records" asp-action="DeleteHistoryView" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 }
