@@ -30,14 +30,18 @@
                 <a class="dropdown-item" asp-controller="Employees" asp-action="Main"><i class="fas fa-user"></i>
                     User Info</a>
                 <hr>
-                <a class="dropdown-item" asp-controller="Employees" asp-action="History"><i class="fas fa-history"></i>
+                <a class="dropdown-item" asp-controller="Records" asp-action="Index"><i class="fas fa-history"></i>
                     History</a>
                 <hr>
                 <br>
                 <hr>
-                <a class="dropdown-item"><i class="fas fa-address-card"></i> Register Entry</a>
+                <form asp-controller="Records" asp-action="CheckIn" method="post">
+                    <button class="dropdown-item"><i class="fas fa-address-card"></i> Register Entry</button>
+                </form>
                 <hr>
-                <a class="dropdown-item"><i class="fas fa-address-card"></i> Register Exit</a>
+                <form asp-controller="Records" asp-action="CheckOut" method="post">
+                    <button class="dropdown-item"><i class="fas fa-address-card"></i> Register Exit</button>
+                </form>
                 <hr>
             </nav>
         </div>
