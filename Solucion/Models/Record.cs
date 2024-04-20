@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Solucion.Models
 {
     public class Record
@@ -8,6 +10,7 @@ namespace Solucion.Models
 
         public DateTime RegisterExit { get; set; }
 
-        public int Employee_Id { get; set; }
+        [ForeignKey("Employee_Id")]
+        public int Employee_Id { get; set; } 
     }
 }

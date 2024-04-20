@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Solucion.Data;
 using Solucion.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Web;
+using System.Linq;
 
 namespace Solucion.Controllers;
 
@@ -39,6 +41,7 @@ public class EmployeesController : Controller
             var employeesIdentity = new ClaimsIdentity(claims, "login");
 
             var main = new ClaimsPrincipal(employeesIdentity);
+            HttpContext.Response.Cookies.Append("Employee_Id", employee.Id.ToString());
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, main);
             if (employee.Role == "Administrador")
@@ -47,7 +50,7 @@ public class EmployeesController : Controller
             }
             else
             {
-                return RedirectToAction("Main", "Employees");
+                return RedirectToAction("Index", "Records");
             }
         }
         ModelState.AddModelError(string.Empty, "Correo o contraseña incorrectos");
