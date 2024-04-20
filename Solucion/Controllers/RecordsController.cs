@@ -21,11 +21,25 @@ namespace Solucion.Controllers
             _context = baseContext;
         }
 
-        [Authorize]
+        /* [Authorize]
         public async Task<IActionResult> Index()
         {
             var record = await _context.Records.ToListAsync();
             return View(record);
+        } */
+
+        [Authorize]
+        public async Task<IActionResult> Index()
+        {
+            // Obtener valores de las cookies
+            var nameCookie = HttpContext.Request.Cookies["Name"];
+            var idCookie = HttpContext.Request.Cookies["Employee_Id"];
+            Console.WriteLine(idCookie);
+            // Establecer valores predeterminados en caso de que las cookies estén ausentes
+            ViewBag.Name = nameCookie; // Puedes establecer un valor predeterminado o dejarlo como nulo si prefieres
+            ViewBag.Entry = await _context.Records.FirstOrDefaultAsync(r => r.Employee_Id == Convert.ToInt32(idCookie) && r.RegisterExit == null);
+            
+            return View();
         }
 
         [HttpPost]
@@ -53,21 +67,18 @@ namespace Solucion.Controllers
             }
         }
 
+        
         public async Task<IActionResult> CheckOut()
         {
             try
             {
-                var EmployeeId = HttpContext.Request.Cookies["Employee_Id"];
-                var record = new Record()
-                {
-                    RegisterExit = DateTime.Now,
-                    Employee_Id = Convert.ToInt32(EmployeeId)
-                };
+                var idCookie = HttpContext.Request.Cookies["Employee_Id"];
+                var CheckOut = await _context.Records.FirstOrDefaultAsync(r => r.Employee_Id == Convert.ToInt32(idCookie) && r.RegisterExit == null);
+                CheckOut.RegisterExit = DateTime.Now;
 
-                await _context.Records.AddAsync(record);
                 await _context.SaveChangesAsync();
 
-                TempData["MessageSuccess"] = "Se ha generado el registro de entrada correctamente";
+                TempData["MessageSuccess"] = "Se ha generado el registro de tu salida correctamente"; 
                 return RedirectToAction("Index");
             }
             catch (System.Exception)

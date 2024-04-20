@@ -1,3 +1,4 @@
+@model IEnumerable<Solucion.Models.Record>
 <head>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -34,14 +35,21 @@
                     History</a>
                 <hr>
                 <br>
-                <hr>
-                <form asp-controller="Records" asp-action="CheckIn" method="post">
-                    <button class="dropdown-item"><i class="fas fa-address-card"></i> Register Entry</button>
-                </form>
-                <hr>
-                <form asp-controller="Records" asp-action="CheckOut" method="post">
-                    <button class="dropdown-item"><i class="fas fa-address-card"></i> Register Exit</button>
-                </form>
+                <div>
+                    @if(TempData["MessageSuccess"] != null){
+                    <div class="alert alert-success" role="alert">
+                    @TempData["MessageSuccess"]
+                    </div>
+                    }
+                    @if(ViewBag.Entry == null) {
+                    <form asp-controller="Records" asp-action="CheckIn" method="post">
+                        <button class="dropdown-item"><i class="fas fa-address-card"></i> Register Entry</button>
+                    </form>
+                    }else{
+                    <form asp-controller="Records" asp-action="CheckOut" method="post">
+                        <button class="dropdown-item"><i class="fas fa-address-card"></i> Register Exit</button>
+                    </form>}
+                </div>
                 <hr>
             </nav>
         </div>
@@ -53,7 +61,7 @@
 
     <nav class="navbar" style="margin-left: 200px;">
         <div class="container">
-            <h4 class="mt-1">History Records</h4>
+            <h4 class="mt-1">History Records </h4>
             <form asp-controller="Records" asp-action="SearchHistory" method="get">
                 <div class="input-group">
                     <input class="form-control" placeholder="Search" name="searchString" aria-describedby="id">
@@ -70,20 +78,23 @@
                     <th scope="col">Employee Id</th>
                     <th scope="col">Entry Date</th>
                     <th scope="col">Exit Date</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Employee_Id</td>
-                        <td>@item.RegisterEntry</td>
-                        <td>@item.RegisterExit</td>
-                        <td>
-                            <a class="btn btn-danger" asp-controller="Records" asp-action="DeleteHistoryView" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
-                        </td>
-                    </tr>
+                @if (Model != null)
+                { 
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Employee_Id</td>
+                            <td>@item.RegisterEntry</td>
+                            <td>@item.RegisterExit</td>
+                            <td>
+                                <a class="btn btn-danger" asp-controller="Records" asp-action="DeleteHistoryView" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
