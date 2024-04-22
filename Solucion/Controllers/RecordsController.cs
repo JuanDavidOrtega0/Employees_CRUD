@@ -38,8 +38,9 @@ namespace Solucion.Controllers
             // Establecer valores predeterminados en caso de que las cookies estén ausentes
             ViewBag.Name = nameCookie; // Puedes establecer un valor predeterminado o dejarlo como nulo si prefieres
             ViewBag.Entry = await _context.Records.FirstOrDefaultAsync(r => r.Employee_Id == Convert.ToInt32(idCookie) && r.RegisterExit == null);
-            
-            return View();
+            var employee = await _context.Records.ToListAsync();
+
+            return View(employee);
         }
 
         [HttpPost]
@@ -59,7 +60,7 @@ namespace Solucion.Controllers
                 await _context.SaveChangesAsync();
 
                 TempData["MessageSuccess"] = "Se ha generado el registro de entrada correctamente";
-                return RedirectToAction("Index");
+                return RedirectToAction("History");
             }
             catch (System.Exception)
             {
@@ -67,7 +68,7 @@ namespace Solucion.Controllers
             }
         }
 
-        
+
         public async Task<IActionResult> CheckOut()
         {
             try
@@ -78,8 +79,8 @@ namespace Solucion.Controllers
 
                 await _context.SaveChangesAsync();
 
-                TempData["MessageSuccess"] = "Se ha generado el registro de tu salida correctamente"; 
-                return RedirectToAction("Index");
+                TempData["MessageSuccess"] = "Se ha generado el registro de tu salida correctamente";
+                return RedirectToAction("History");
             }
             catch (System.Exception)
             {
@@ -118,6 +119,49 @@ namespace Solucion.Controllers
             _context.Records.Remove(history);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DeleteRecordView(int? id)
+        {
+            var history = await _context.Records.FindAsync(id);
+            if (history == null)
+            {
+                return NotFound();
+            }
+            return View(history);
+        }
+
+        public async Task<IActionResult> DeleteRecord(int id)
+        {
+            var history = await _context.Records.FindAsync(id);
+            if (history == null)
+            {
+                return NotFound();
+            }
+            _context.Records.Remove(history);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("History");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> History()
+        {   
+            var nameCookie = HttpContext.Request.Cookies["Name"];
+            var idCookie = HttpContext.Request.Cookies["Employee_Id"];
+            var employee = await _context.Records.ToListAsync();
+            ViewBag.Entry = await _context.Records.FirstOrDefaultAsync(r => r.Employee_Id == Convert.ToInt32(idCookie) && r.RegisterExit == null);
+            return View(employee);
+        }
+
+        [Authorize]
+        public IActionResult SearchRecord(string searchString)
+        {
+            var history = _context.Records.AsQueryable();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                history = history.Where(x => x.RegisterEntry.ToString().Contains(searchString) || x.RegisterExit.ToString().Contains(searchString) || x.Employee_Id.ToString().Contains(searchString));
+            }
+            return View("History", history.ToList());
         }
     }
 }

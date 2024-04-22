@@ -50,7 +50,7 @@ public class EmployeesController : Controller
             }
             else
             {
-                return RedirectToAction("Index", "Records");
+                return RedirectToAction("Main", "Employees");
             }
         }
         ModelState.AddModelError(string.Empty, "Correo o contraseña incorrectos");
@@ -181,7 +181,7 @@ public class EmployeesController : Controller
         var employees = _context.Employees.AsQueryable();
         if (!string.IsNullOrEmpty(searchString))
         {
-            employees = employees.Where(x => x.Name.Contains(searchString) || x.LastName.Contains(searchString) || x.Email.Contains(searchString));
+            employees = employees.Where(x => x.Name.Contains(searchString) || x.LastName.Contains(searchString) || x.Email.Contains(searchString) || x.Role.Contains(searchString));
         }
         return View("Home", employees.ToList());
     }
@@ -197,5 +197,70 @@ public class EmployeesController : Controller
         return View("Main", employees.ToList());
     }
 
-    
+    [Authorize]
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(Employee employee)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Employees.Add(employee);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Home");
+        }
+        return View(employee);
+    }
+
+    public async Task<IActionResult> Update(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        var employee = await _context.Employees.FindAsync(id);
+        if (employee == null)
+        {
+            return NotFound();
+        }
+        return View(employee);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update(int? id, Employee employee)
+    {
+        if (id != employee.Id)
+        {
+            return NotFound();
+        }
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                _context.Update(employee);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EmployeeExists(employee.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction("Home");
+        }
+        return View(employee);
+    }
+
+    private bool EmployeeExists(int id)
+    {
+        return _context.Employees.Any(e => e.Id == id);
+    }
 }

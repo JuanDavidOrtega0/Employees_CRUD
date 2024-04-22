@@ -1,18 +1,10 @@
 @model Solucion.Models.Employee
 
-<style>
-    body {
-        background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBOHJL9oFLUstl64sfxXq8c9L1NODmaWtxLEFYGWOnSw&s);
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-</style>
-
 <body>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card mt-5" style="padding: 60px;">
+                <div class="card mt-5 bg-dark text-light" style="padding: 60px;">
                     <div class="text-center">
                         <h2>Deseas eliminar el Usuario @Model.Name @Model.LastName?</h2>
                         <hr>
@@ -21,6 +13,7 @@
                         <p><strong>Phone: </strong>@Model.Phone</p>
                         <p><strong>Address: </strong>@Model.Address</p>
                         <p><strong>Password: </strong>@Model.Password</p>
+                        <p><strong>Role: </strong>@Model.Role</p>
                         <br>
                         <form asp-controller="Employees" asp-action="DeleteConfirmed" method="post">
                             <input type="hidden" asp-for="Id">
